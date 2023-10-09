@@ -12,7 +12,7 @@
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
 
-    if([@"setUp" isEqualToString:call.method]) {
+    if([@"setAppId" isEqualToString:call.method]) {
         NSString *appID = call.arguments[@"app_id"];
         [Bugly startWithAppId:appID];
     } else if ([@"postException" isEqualToString:call.method]) {

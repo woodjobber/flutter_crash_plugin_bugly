@@ -1,4 +1,4 @@
-group 'com.hangchen.flutter_crash_plugin'
+group 'com.woodjobber.flutter_crash_plugin'
 version '1.0'
 
 buildscript {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'package:flutter_crash_plugin/flutter_crash_plugin.dart';
 import 'dart:io';
@@ -23,19 +22,18 @@ Future<Null> _reportError(dynamic error, dynamic stackTrace) async {
   print('Reporting to Bugly...');
 
   FlutterCrashPlugin.postException(error, stackTrace);
-
 }
 
 Future<Null> main() async {
   // This captures errors reported by the Flutter framework.
   FlutterError.onError = (FlutterErrorDetails details) async {
-    Zone.current.handleUncaughtError(details.exception, details.stack);
+    Zone.current.handleUncaughtError(details.exception, details.stack!);
   };
 
-  runZoned<Future<Null>>(() async {
+  runZonedGuarded(() {
     runApp(MyApp());
-  }, onError: (error, stackTrace) async {
-    await _reportError(error, stackTrace);
+  }, (error, stack) async {
+    await _reportError(error, stack);
   });
 }
 
@@ -45,30 +43,28 @@ class MyApp extends StatefulWidget {
   State<StatefulWidget> createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    if(Platform.isAndroid){
-      FlutterCrashPlugin.setUp('43eed8b173');
-    }else if(Platform.isIOS){
-      FlutterCrashPlugin.setUp('088aebe0d5');
+    if (Platform.isAndroid) {
+      FlutterCrashPlugin.setAppId('xxxx');
+    } else if (Platform.isIOS) {
+      FlutterCrashPlugin.setAppId('zzzzz');
     }
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(),
     );
   }
 }
-
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -81,23 +77,23 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            RaisedButton(
+            ElevatedButton(
               child: Text('Dart exception'),
-              elevation: 1.0,
               onPressed: () {
                 throw StateError('This is a Dart exception.');
               },
             ),
-            new RaisedButton(
+            ElevatedButton(
               child: Text('async Dart exception'),
-              elevation: 1.0,
               onPressed: () async {
                 foo() async {
                   throw StateError('This is an async Dart exception.');
                 }
+
                 bar() async {
                   await foo();
                 }
+
                 await bar();
               },
             )

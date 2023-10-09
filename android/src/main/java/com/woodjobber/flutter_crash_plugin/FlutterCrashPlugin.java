@@ -1,4 +1,4 @@
-package com.hangchen.flutter_crash_plugin;
+package com.woodjobber.flutter_crash_plugin;
 
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -25,7 +25,7 @@ public class FlutterCrashPlugin implements MethodCallHandler {
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
-    if(call.method.equals("setUp")) {
+    if(call.method.equals("setAppId")) {
       String appID = call.argument("app_id");
       CrashReport.initCrashReport(registrar.activity().getApplicationContext(), appID, true);
       result.success(0);

@@ -1,11 +1,9 @@
 name: flutter_crash_plugin
-description: A new Flutter plugin.
+description: flutter crash plugin for Bugly.
 version: 0.0.1
-author:
-homepage:
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -25,7 +23,7 @@ flutter:
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: com.hangchen.flutter_crash_plugin
+    androidPackage: com.woodjobber.flutter_crash_plugin
     pluginClass: FlutterCrashPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
